@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package userpb;
+
+option go_package = "./";
+
+service UserService{
+    rpc UserLogin(LoginRequest) returns(CommonResponse);
+    rpc UserSignup(SignupRequest) returns(CommonResponse);
+    rpc UserProfile (UserID) returns (Profile);
+    rpc UserProfileUpdate(ProfileUpdate) returns (Profile);
+
+    rpc EditUser(SignupRequest) returns (CommonResponse);
+    rpc FindAllUsers(UNoParam) returns (Users);
+    rpc DeleteUser(UserID) returns (CommonResponse);
+    rpc FindUserByID(UserID) returns (Profile);
+    rpc FindUserByEmail(Email) returns (Profile);
+
+    rpc UserFetchDoctorByID(DoctorID) returns(DoctorModel);
+    rpc UserFetchDoctorByName(DoctorName) returns (DoctorModel);
+    rpc UserFetchAllDoctors(UNoParam) returns (DoctorList);
+}
+
+message LoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message Result {
+    string status = 1;
+    string error = 2;
+    string message = 3;
+}
+
+message SignupRequest {
+    string firstname = 1;
+    string lastname = 2;
+    string dob = 3;
+    string gender = 4;
+    string email = 5;
+    string phone = 6;
+    string Role = 7;
+    string password = 8;
+}
+
+message UserID {
+    uint32 id = 1;
+}
+
+message CommonResponse {
+    string status = 1;
+    string error = 2;
+    string message = 3;
+}
+
+message UNoParam{}
+
+message Users {
+    repeated Profile userlist = 1;
+}
+
+message Profile {
+    string firstname = 1;
+    string lastname = 2;
+    string username = 3;
+    string dob = 4;
+    string gender = 5;
+    string email = 6;
+    string phone = 7;
+} 
+
+message ProfileUpdate {
+    uint32 userid = 1;
+    string firstname = 2;
+    string lastname = 3;
+    string username = 4;
+    string dob = 5;
+    string gender = 6;
+    string phone = 7;
+    string address = 8;
+}
+
+message Email {
+    string email = 1;
+}
+
+message DoctorModel {
+    string doctor_name = 1;
+    uint64 age = 2;
+    string speciality = 3;
+    string gender = 4;
+    string email = 5;
+}
+
+message DoctorID {
+    uint32 id = 1;
+}
+
+message DoctorName {
+    string name = 1;
+}
+
+message DoctorList {
+    repeated DoctorModel doctors = 1;
+}

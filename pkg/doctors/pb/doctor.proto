@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package docpb;
+
+option go_package = "./";
+
+
+service DoctorServices {
+    rpc FetchDoctorByID(DoctorID) returns(DoctorModel);
+    rpc FetchDoctorByName(DoctorName) returns (DoctorModel);
+    rpc FetchAllDoctors(NoParam) returns (DoctorList);
+}
+
+
+message NoParam{}
+
+message DoctorModel {
+    string doctor_name = 1;
+    uint64 age = 2;
+    string speciality = 3;
+    string gender = 4;
+    string email = 5;
+}
+
+
+message DoctorID {
+    uint32 id = 1;
+}
+
+message DoctorName {
+    string name = 1;
+}
+
+message DoctorList {
+    repeated DoctorModel doctors = 1;
+}
